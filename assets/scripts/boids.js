@@ -7,8 +7,8 @@ class boid {
     }
 
     update() {
-        this.position.add(this.velocity);
-        this.velocity.add(this.acceleration)
+        this.position.add(this.velocity.limit(3));
+        this.velocity.add(this.acceleration.limit(3))
     }
 
     edges() {
@@ -22,6 +22,22 @@ class boid {
         } else if (this.position.y < 0) {
             this.position.y = windowHeight;
         }
+    }
+
+    seek(target) {
+        // A vector pointing from the location to the target
+        let desired = p5.Vector.sub(target, this.position);
+
+        // Scale to maximum speed
+        desired.setMag(3);
+
+        // Steering = Desired minus velocity
+        let steer = p5.Vector.sub(desired, this.velocity);
+
+        // Limit to maximum steering force
+        steer.limit(3);
+
+        this.acceleration.add(steer);
     }
 
     show() {

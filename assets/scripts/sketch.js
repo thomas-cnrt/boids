@@ -14,5 +14,9 @@ function draw() {
         boid.show();
         boid.update();
         boid.edges();
+        if (mouseIsPressed) {
+            let mouse = createVector(mouseX, mouseY);
+            boid.seek(mouse);
+        }
     }
 }
