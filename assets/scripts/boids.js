@@ -1,7 +1,8 @@
 class boid {
     constructor() {
-        this.position = createVector(windowHeight / 2, windowHeight / 2)
+        this.position = createVector(random(0, windowWidth), random(0, windowHeight))
         this.velocity = p5.Vector.random2D();
+        this.velocity.setMag(random(0.5, 4));
         this.acceleration = createVector();
     }
 

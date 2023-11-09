@@ -2,8 +2,9 @@ const flock = [];
 
 function setup() {
     createCanvas(windowWidth, windowHeight);
-    flock.push(new boid());
-
+    for (let index = 0; index < 100; index++) {
+        flock.push(new boid());
+    }
 }
 
 function draw() {
