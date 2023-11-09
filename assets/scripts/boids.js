@@ -11,6 +11,19 @@ class boid {
         this.velocity.add(this.acceleration)
     }
 
+    edges() {
+        if (this.position.x > windowWidth) {
+            this.position.x = 0;
+        } else if (this.position.x < 0) {
+            this.position.x = windowWidth;
+        }
+        if (this.position.y > windowHeight) {
+            this.position.y = 0;
+        } else if (this.position.y < 0) {
+            this.position.y = windowHeight;
+        }
+    }
+
     show() {
         strokeWeight(16);
         stroke(255);
