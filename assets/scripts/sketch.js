@@ -10,7 +10,7 @@ function setup() {
 }
 
 function draw() {
-    background(50);
+    background(250);
 
     for (let boid of flock) {
         boid.show();

@@ -9,23 +9,45 @@ class boid {
         this.velocity.setMag(random(0.5, 4));
         this.acceleration = createVector();
         this.size = 1;
+        this.tail = []; // Store previous positions for the tail
+        this.tail_length = 10;
+
     }
 
     update() {
         this.position.add(this.velocity.limit(MAX_SPEED));
-        this.velocity.add(this.acceleration.limit(MAX_ACCEL))
+        this.velocity.add(this.acceleration.limit(MAX_ACCEL));
+
+        this.tail.push(createVector(this.position.x, this.position.y));
+        if (this.tail.length > this.tail_length) {
+            this.tail.shift(); // Remove the oldest position
+        }
     }
 
     edges() {
         if (this.position.x > windowWidth) {
+            this.clear_tail();
             this.position.x = 0;
         } else if (this.position.x < 0) {
+            this.clear_tail();
             this.position.x = windowWidth;
         }
         if (this.position.y > windowHeight) {
+            this.clear_tail();
             this.position.y = 0;
         } else if (this.position.y < 0) {
+            this.clear_tail();
             this.position.y = windowHeight;
+        }
+    }
+
+    clear_tail() {
+        this.tail = [];
+    }
+
+    render_tail() {
+        for (let i = 0; i < this.tail.length - 1; i++) {
+            line(this.tail[i].x, this.tail[i].y, this.tail[i + 1].x, this.tail[i + 1].y);
         }
     }
 
@@ -59,5 +81,9 @@ class boid {
         vertex(this.size, this.size * 2);
         endShape(CLOSE);
         pop();
+
+        stroke(7, 48, 42);
+        strokeWeight(1.5);
+        this.render_tail();
     }
 }
