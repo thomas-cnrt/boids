@@ -8,9 +8,9 @@ class boid {
         this.velocity = p5.Vector.random2D();
         this.velocity.setMag(random(0.5, 4));
         this.acceleration = createVector();
-        this.size = 1;
+        this.size = 0.5;
         this.tail = []; // Store previous positions for the tail
-        this.tail_length = 10;
+        this.tail_length = 8;
 
     }
 
