@@ -1,14 +1,19 @@
+const MAX_SPEED = 3;
+const MAX_ACCEL = 5;
+const MAX_STEER = 0.01;
+
 class boid {
     constructor() {
         this.position = createVector(random(0, windowWidth), random(0, windowHeight))
         this.velocity = p5.Vector.random2D();
         this.velocity.setMag(random(0.5, 4));
         this.acceleration = createVector();
+        this.size = 1;
     }
 
     update() {
-        this.position.add(this.velocity.limit(3));
-        this.velocity.add(this.acceleration.limit(3))
+        this.position.add(this.velocity.limit(MAX_SPEED));
+        this.velocity.add(this.acceleration.limit(MAX_ACCEL))
     }
 
     edges() {
@@ -29,20 +34,30 @@ class boid {
         let desired = p5.Vector.sub(target, this.position);
 
         // Scale to maximum speed
-        desired.setMag(3);
+        desired.setMag(MAX_SPEED);
 
         // Steering = Desired minus velocity
         let steer = p5.Vector.sub(desired, this.velocity);
 
         // Limit to maximum steering force
-        steer.limit(3);
+        steer.limit(MAX_STEER);
 
         this.acceleration.add(steer);
     }
 
     show() {
-        strokeWeight(16);
-        stroke(255);
-        point(this.position.x, this.position.y);
+        let theta = this.velocity.heading() + PI / 2;
+        fill(127);
+        stroke(200);
+        strokeWeight(10);
+        push();
+        translate(this.position.x, this.position.y);
+        rotate(theta);
+        beginShape();
+        vertex(0, -this.size * 2);
+        vertex(-this.size, this.size * 2);
+        vertex(this.size, this.size * 2);
+        endShape(CLOSE);
+        pop();
     }
 }
